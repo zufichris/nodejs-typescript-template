@@ -2,9 +2,11 @@
 
 import * as express from "express"; //This makes sure you're extending  existing interfaces rather than defining a new ones
 
-declare namespace Express {
-  interface Request {
-    userId: string;
+declare global {
+  namespace Express {
+    interface Request {
+      userId: string;
+    }
+    //Add More Properties
   }
-  //Add More Properties
 }

@@ -16,5 +16,7 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  res.status(err.error.status ?? 500).json(err);
+  res
+    .status(err?.error?.status ?? StatusCodes.badGateway)
+    .json({ ...err, data: null });
 };

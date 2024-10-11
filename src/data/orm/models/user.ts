@@ -8,7 +8,7 @@ const schema = new mongoose.Schema<IUser>(
     userName:String,
     verified: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   {

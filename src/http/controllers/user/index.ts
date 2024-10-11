@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import { CreateUser } from "../../../domain/useCases/CreateUser";
 import { UserRepositoryImpl } from "../../../data/orm/repository/UserRepositoryImpl";
 import { UserModel } from "../../../data/orm/models/user";
+import { IResponseData } from "../../../global/entities";
+import { StatusCodes } from "../../../global/enums";
+import { CreateUserDto } from "../../../data/dto/user";
 import { AppError } from "../../../global/error";
 
 class Controllers {
@@ -11,27 +14,37 @@ class Controllers {
     this.createUserUseCase = new CreateUser(userRepositoryImpl);
   }
 
-  static async getAll(req: Request, res: Response) {
-    try {
-      res.status(200).send("App Running");
-    } catch (error) {
-      throw error;
-    }
-  }
   async createUser(req: Request, res: Response) {
     try {
-        console.log("Heereee")
-        console.log(this.createUserUseCase)
-      const result = await this.createUserUseCase.execute({
-        email: "john@gmail.com",
-        firstName: "John",
+      const body = req.body;
+      const userData: CreateUserDto = {
+        email: body.email,
+        firstName: body.firstName,
+      };
+      const error = new AppError({
+        message: "Data Validation Failed Invalid Data",
+        errors: [],
+        type: "create user",
+        status: StatusCodes.badRequest,
       });
-      //Cannot read properties of undefined (reading 'createUserUseCase
+      if (!userData.firstName)
+        error.error.errors?.push({ firstName: "FirstName is Required" });
+      if (!userData.email)
+        error.error.errors?.push({ email: "Email is Required" });
+
+      if (error.error.errors?.length) throw error;
+
+      const result = await this.createUserUseCase.execute(userData);
       res.status(result.status).json(result);
-    } catch (error:any) {
-     throw new AppError({
-        message:error?.message
-     })
+    } catch (err: any) {
+      const error: IResponseData<null> = {
+        message: "Error Creating User",
+        status: err?.error?.status ?? StatusCodes.badGateway,
+        type: "create user",
+        data: null,
+        ...err,
+      };
+      res.status(error.status).json(error);
     }
   }
 }

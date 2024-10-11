@@ -6,6 +6,7 @@ export interface IResponseData<TData> {
   message: string;
   description?: string;
   errors?: { [key: string]: any }[];
+  stack?:any,
   redirect?: {
     path: string;
   };
