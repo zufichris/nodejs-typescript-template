@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import { AppError } from "../middleware/error";
 import { StatusCodes } from "../global/enums";
+import { AppError } from "../global/error";
 const { error, parsed } = dotenv.config();
 
 if (error) {
@@ -14,4 +14,5 @@ if (error) {
 export const env = {
   in_prod: parsed!.NODE_ENV?.toLowerCase()?.includes("prod"),
   port: parsed!.PORT,
+  mongo_uri:parsed!.MongoDB_URI
 };

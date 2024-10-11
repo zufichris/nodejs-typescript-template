@@ -1,7 +1,10 @@
 import express from "express";
-import { Start } from "./server/httpServer";
-import Router from "./services/routes/route_v1";
-import { AppError, errorHandler, notFound } from "./middleware/error";
+import router from "./http/routes/route_v1";
+import { Start } from "./http/server/httpServer";
+import { AppError } from "./global/error";
+import { errorHandler, notFound } from "./http/middleware/error";
+
+
 const app = express();
 app.use(
   express.json({
@@ -28,7 +31,7 @@ app.use(
     },
   })
 );
-app.use(Router);
+app.use(router);
 app.use(notFound);
 app.use(errorHandler);
 Start(app);
