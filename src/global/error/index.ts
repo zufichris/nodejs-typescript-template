@@ -1,8 +1,6 @@
 import fs from "fs";
-import { IResponseData } from "../../global/dto";
 import { env } from "../../config/env";
-import { NextFunction, Request, Response } from "express";
-import { StatusCodes } from "../../global/enums";
+import { IResponseData } from "../entities";
 
 export class AppError extends Error {
   public error: Partial<IResponseData<any>>;
@@ -11,9 +9,9 @@ export class AppError extends Error {
     this.error = err;
 
     const errorFilePath =
-      this.stack!.split("\n")[1].split("Object.<anonymous>")[1];
+      this.stack!.split(")")[0];
 
-    this.error.description = `${this.error.description ?? this.message}-at${
+    this.error.description = `${this.error.description ?? this.message}-Reference:${
       !env?.in_prod ? errorFilePath ?? this.stack : ""
     }`;
 
@@ -44,28 +42,10 @@ export class AppError extends Error {
     fs.writeFile(
       `logs/${
         date.toJSON().split("T")[0]
-      }-Time-${date.getSeconds()}sec+${date.getMinutes()}min+${date.getHours()}hrs.json`,
+      }-Time-${date.getSeconds()}sec+${date.getMinutes()}min+${date.getHours()}hrs.log`,
       JSON.stringify(data),
       "utf-8",
-      (err) => {
-        console.log(err);
-      }
+      () => {}
     );
   }
 }
-
-export const notFound = (req: Request, res: Response, next: NextFunction) => {
-  throw new AppError({
-    message: "Resource Not Found",
-    status: StatusCodes.notFound,
-  });
-};
-
-export const errorHandler = (
-  err: AppError,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  res.status(err.error.status ?? 500).json(err);
-};

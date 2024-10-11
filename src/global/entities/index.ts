@@ -9,6 +9,7 @@ export interface IResponseData<TData> {
   redirect?: {
     path: string;
   };
+  type?:string;
   fieldsModified?: number;
   documentsModified?: number;
 }
@@ -19,3 +20,5 @@ export interface IResponseDataPaginated extends IResponseData<unknown> {
   filterCount: number;
   totalCount?: number;
 }
+
+export type ID=string|number
