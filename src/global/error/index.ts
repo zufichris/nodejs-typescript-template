@@ -1,6 +1,6 @@
 import fs from "fs";
-import { IResponseData } from "../../global/dto";
 import { env } from "../../config/env";
+import { IResponseData } from "../entities";
 
 export class AppError extends Error {
   public error: Partial<IResponseData<any>>;
@@ -9,13 +9,13 @@ export class AppError extends Error {
     this.error = err;
 
     const errorFilePath =
-      this.stack!.split("\n")[1].split("Object.<anonymous>")[1];
+      this.stack!.split(")")[0];
 
-    this.error.description = `${this.error.description ?? this.message}-at${
-      !env.in_prod ? errorFilePath ?? this.stack : ""
+    this.error.description = `${this.error.description ?? this.message}-Reference:${
+      !env?.in_prod ? errorFilePath ?? this.stack : ""
     }`;
 
-    this.error.errors = !env.in_prod
+    this.error.errors = !env?.in_prod
       ? [
           {
             stack: this.stack,
@@ -42,12 +42,10 @@ export class AppError extends Error {
     fs.writeFile(
       `logs/${
         date.toJSON().split("T")[0]
-      }-Time-${date.getSeconds()}sec+${date.getMinutes()}min+${date.getHours()}hrs.json`,
+      }-Time-${date.getSeconds()}sec+${date.getMinutes()}min+${date.getHours()}hrs.log`,
       JSON.stringify(data),
       "utf-8",
-      (err) => {
-        console.log(err);
-      }
+      () => {}
     );
   }
 }
