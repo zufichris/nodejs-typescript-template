@@ -1,7 +1,7 @@
 ### **Node.js-TypeScript Template with MongoDB and Express**
 **Links:**
- [Browse Repository](https://github.com/zufichris/nodejs-typescript-template)
-[Suggest A Banger]( https://github.com/zufichris/nodejs-typescript-template/discussions)
+* [Browse Repository](https://github.com/zufichris/nodejs-typescript-template)
+* [Suggest A Banger]( https://github.com/zufichris/nodejs-typescript-template/discussions)
 
 **Node.js-TypeScript Template with MongoDB** is a comprehensive boilerplate project designed to accelerate the development of modern web applications. It provides a solid foundation with essential features and best practices, allowing developers to focus on building their application's core logic.
 
@@ -58,7 +58,7 @@ Write unit tests, use a testing framework, and aim for high code coverage.
 Participate in code reviews, provide constructive feedback, and follow project guidelines.
 
 **Links:**
- [Browse Repository](https://github.com/zufichris/nodejs-typescript-template)
-[Suggest A Banger]( https://github.com/zufichris/nodejs-typescript-template/discussions)
+* [Browse Repository](https://github.com/zufichris/nodejs-typescript-template)
+* [Suggest A Banger]( https://github.com/zufichris/nodejs-typescript-template/discussions)
 
 By leveraging this well-structured template and following the contributing guidelines, developers can rapidly build and deploy robust Node.js-TypeScript applications with MongoDB as the backend.
