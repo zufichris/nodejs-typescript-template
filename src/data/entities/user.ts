@@ -1,4 +1,4 @@
-import { ID } from "../../global/types";
+import { ID } from "../../global/entities";
 import { AuthTypes, OAuthProviders } from "../enums/auth";
 
 export interface IUser {
