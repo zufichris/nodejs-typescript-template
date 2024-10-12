@@ -9,7 +9,7 @@ import { BaseUseCase } from "../../global/useCase";
 export class CreateUser
   implements BaseUseCase<Partial<IUser>, IResponseData<IUser[]>>
 {
-    constructor(private readonly userRepositoryImpl: UserRepositoryImpl) {}
+  constructor(private readonly userRepositoryImpl: UserRepositoryImpl) {}
 
   async execute(input: CreateUserDto): Promise<IResponseData<IUser[]>> {
     try {
